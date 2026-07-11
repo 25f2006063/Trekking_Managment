@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}
+View Treks
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between mb-3">
+
+        <h2>All Treks</h2>
+
+        <a href="{{ url_for('add_trek') }}" class="btn btn-primary">
+            Add Trek
+        </a>
+
+    </div>
+
+    <table class="table table-bordered table-striped">
+
+        <thead class="table-dark">
+
+            <tr>
+                <th>ID</th>
+                <th>Trek Name</th>
+                <th>Location</th>
+                <th>Difficulty</th>
+                <th>Duration</th>
+                <th>Slots</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% for trek in treks %}
+
+            <tr>
+
+                <td>{{ trek.id }}</td>
+
+                <td>{{ trek.trek_name }}</td>
+
+                <td>{{ trek.location }}</td>
+
+                <td>{{ trek.difficulty }}</td>
+
+                <td>{{ trek.duration }} Days</td>
+
+                <td>{{ trek.available_slots }}</td>
+
+                <td>{{ trek.status }}</td>
+
+                <td>
+
+                    <a href="#" class="btn btn-warning btn-sm">
+                        Edit
+                    </a>
+
+                    <a href="{{ url_for('delete_trek', trek_id=trek.id) }}"
+                        class="btn btn-danger btn-sm">
+                        Delete
+
+                    </a>
+                </td>
+
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

@@ -1,6 +1,8 @@
 from application.database import db
 
 
+# ---------------- USER MODEL ---------------- #
+
 class User(db.Model):
     __tablename__ = "users"
 
@@ -22,12 +24,14 @@ class User(db.Model):
         return f"<User {self.username}>"
 
 
+# ---------------- TREK MODEL ---------------- #
+
 class Trek(db.Model):
     __tablename__ = "treks"
 
     id = db.Column(db.Integer, primary_key=True)
 
-    name = db.Column(db.String(100), nullable=False)
+    trek_name = db.Column(db.String(100), nullable=False)
 
     location = db.Column(db.String(100), nullable=False)
 
@@ -45,18 +49,21 @@ class Trek(db.Model):
 
     status = db.Column(
         db.String(20),
-        default="Open"
+        default="Pending"
     )
 
-    start_date = db.Column(db.Date)
+    start_date = db.Column(db.Date, nullable=False)
 
-    end_date = db.Column(db.Date)
+    end_date = db.Column(db.Date, nullable=False)
 
-    staff = db.relationship("User", backref="treks")
+    # Relationship with User (Staff)
+    staff = db.relationship("User", backref="assigned_treks")
 
     def __repr__(self):
-        return f"<Trek {self.name}>"
+        return f"<Trek {self.trek_name}>"
 
+
+# ---------------- BOOKING MODEL ---------------- #
 
 class Booking(db.Model):
     __tablename__ = "bookings"
@@ -75,16 +82,25 @@ class Booking(db.Model):
         nullable=False
     )
 
-    booking_date = db.Column(db.Date)
+    booking_date = db.Column(
+        db.Date,
+        nullable=False
+    )
 
     status = db.Column(
         db.String(20),
         default="Booked"
     )
 
-    user = db.relationship("User", backref="bookings")
+    user = db.relationship(
+        "User",
+        backref="bookings"
+    )
 
-    trek = db.relationship("Trek", backref="bookings")
+    trek = db.relationship(
+        "Trek",
+        backref="bookings"
+    )
 
     def __repr__(self):
         return f"<Booking {self.id}>"

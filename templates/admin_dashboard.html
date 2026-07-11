@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}
+Admin Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">
+        Admin Dashboard
+    </h2>
+
+    <div class="row">
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card text-center shadow">
+
+                <div class="card-body">
+
+                    <h5>Total Users</h5>
+
+                    <h2>{{ total_users }}</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card text-center shadow">
+
+                <div class="card-body">
+
+                    <h5>Total Staff</h5>
+
+                    <h2>{{ total_staff }}</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4 mb-3">
+
+            <div class="card text-center shadow">
+
+                <div class="card-body">
+
+                    <h5>Pending Staff</h5>
+
+                    <h2>{{ pending_staff }}</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-6 mb-3">
+
+            <div class="card text-center shadow">
+
+                <div class="card-body">
+
+                    <h5>Total Treks</h5>
+
+                    <h2>{{ total_treks }}</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+
+            <div class="card text-center shadow">
+
+                <div class="card-body">
+
+                    <h5>Total Bookings</h5>
+
+                    <h2>{{ total_bookings }}</h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <hr>
+
+    <div class="d-grid gap-2 d-md-flex">
+
+        <a href="{{ url_for('add_trek') }}" class="btn btn-primary">
+            Add Trek
+        </a>
+
+        <a href="#" class="btn btn-success">
+            Approve Staff
+        </a>
+
+        <a href="#" class="btn btn-warning">
+            View Users
+        </a>
+
+        <a href="#" class="btn btn-info">
+            View Bookings
+        </a>
+
+        <a href="{{ url_for('view_treks') }}" class="btn btn-secondary">
+            View Treks
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}
