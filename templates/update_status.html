@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}
+Update Trek Status
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2>{{ trek.trek_name }}</h2>
+
+    <form method="POST">
+
+        <div class="mb-3">
+
+            <label>Status</label>
+
+            <select
+                name="status"
+                class="form-control">
+
+                <option value="Open">Open</option>
+
+                <option value="Started">Started</option>
+
+                <option value="Ongoing">Ongoing</option>
+
+                <option value="Completed">Completed</option>
+
+            </select>
+
+        </div>
+
+        <button
+            class="btn btn-success"
+            type="submit">
+
+            Save
+
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

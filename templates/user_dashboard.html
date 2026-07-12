@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}
+User Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2>Available Treks</h2>
+
+    <table class="table table-bordered">
+
+            <thead>
+
+                <tr>
+
+                    <th>Name</th>
+                    <th>Location</th>
+                    <th>Difficulty</th>
+                    <th>Duration</th>
+                    <th>Slots</th>
+                    <th>Status</th>
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+        <tbody>
+
+            {% for trek in available_treks %}
+
+                <tr>
+
+                    <td>{{ trek.trek_name }}</td>
+                    <td>{{ trek.location }}</td>
+                    <td>{{ trek.difficulty }}</td>
+                    <td>{{ trek.duration }}</td>
+                    <td>{{ trek.available_slots }}</td>
+                    <td>{{ trek.status }}</td>
+
+                    <td>
+
+                    <a
+                    href="{{ url_for('book_trek', trek_id=trek.id) }}"
+                    class="btn btn-success">
+
+                    Book
+
+                    </a>
+
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

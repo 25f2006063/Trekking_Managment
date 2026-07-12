@@ -199,9 +199,9 @@ def add_trek():
     
     return render_template("add_trek.html")
 
-# ---------------- ADMIN/TREKS---------------- #
-@app.route("/admin/treks")
-def view_treks():
+# ---------------- ADMIN EDIT TREKS---------------- #
+@app.route("/admin/edit-trek/<int:trek_id>", methods=["GET", "POST"])
+def edit_trek(trek_id):
 
     if "user_id" not in session:
         return redirect("/login")
@@ -209,14 +209,36 @@ def view_treks():
     if session["role"] != "admin":
         return "Access Denied"
 
-    treks = Trek.query.all()
+    trek = Trek.query.get_or_404(trek_id)
+
+    if request.method == "POST":
+
+        trek.trek_name = request.form["trek_name"]
+        trek.location = request.form["location"]
+        trek.difficulty = request.form["difficulty"]
+        trek.duration = int(request.form["duration"])
+        trek.available_slots = int(request.form["available_slots"])
+
+        trek.start_date = datetime.strptime(
+            request.form["start_date"],
+            "%Y-%m-%d"
+        ).date()
+
+        trek.end_date = datetime.strptime(
+            request.form["end_date"],
+            "%Y-%m-%d"
+        ).date()
+
+        db.session.commit()
+
+        return redirect("/admin/treks")
 
     return render_template(
-        "view_treks.html",
-        treks=treks
+        "edit_trek.html",
+        trek=trek
     )
 
-# ---------------- ADMIN DELETE TREK  ---------------- #
+# ---------------- DELETE TREK---------------- #
 @app.route("/admin/delete-trek/<int:trek_id>")
 def delete_trek(trek_id):
 
@@ -234,9 +256,63 @@ def delete_trek(trek_id):
 
     return redirect("/admin/treks")
 
+# ---------------- ADMIN/TREKS---------------- #
+@app.route("/admin/treks")
+def view_treks():
+
+    if "user_id" not in session:
+        return redirect("/login")
+
+    if session["role"] != "admin":
+        return "Access Denied"
+
+    treks = Trek.query.all()
+
+    return render_template(
+        "view_treks.html",
+        treks=treks
+    )
+
+
+# ---------------- ADMIN STAFF PENDING ---------------- #
+@app.route("/admin/pending-staff")
+def pending_staff():
+
+    if "user_id" not in session:
+        return redirect("/login")
+
+    if session["role"] != "admin":
+        return "Access Denied"
+
+    pending_staff = User.query.filter_by(
+        role="staff",
+        is_approved=False
+    ).all()
+
+    return render_template(
+        "pending_staff.html",
+        pending_staff=pending_staff
+    )
+
+# ---------------- ADMIN STAFF PPROVE ---------------- #
+@app.route("/admin/approve-staff/<int:staff_id>")
+def approve_staff(staff_id):
+
+    if "user_id" not in session:
+        return redirect("/login")
+
+    if session["role"] != "admin":
+        return "Access Denied"
+
+    staff = User.query.get_or_404(staff_id)
+
+    staff.is_approved = True
+
+    db.session.commit()
+
+    return redirect("/admin/pending-staff")
 
 # ---------------- STAFF ---------------- #
-
 @app.route("/staff")
 def staff_dashboard():
 
@@ -246,11 +322,45 @@ def staff_dashboard():
     if session["role"] != "staff":
         return "Access Denied"
 
-    return render_template("staff_dashboard.html")
+    assigned_treks = Trek.query.filter_by(
+        assigned_staff_id=session["user_id"]
+    ).all()
+
+    return render_template(
+        "staff_dashboard.html",
+        assigned_treks=assigned_treks
+    )
+
+# ---------------- STAFF UPDATE ---------------- #
+@app.route("/staff/update-status/<int:trek_id>", methods=["GET", "POST"])
+def update_trek_status(trek_id):
+
+    if "user_id" not in session:
+        return redirect("/login")
+
+    if session["role"] != "staff":
+        return "Access Denied"
+
+    trek = Trek.query.get_or_404(trek_id)
+
+    if trek.assigned_staff_id != session["user_id"]:
+        return "Access Denied"
+
+    if request.method == "POST":
+
+        trek.status = request.form["status"]
+
+        db.session.commit()
+
+        return redirect("/staff")
+
+    return render_template(
+        "update_status.html",
+        trek=trek
+    )
 
 
 # ---------------- USER ---------------- #
-
 @app.route("/user")
 def user_dashboard():
 
@@ -260,7 +370,14 @@ def user_dashboard():
     if session["role"] != "user":
         return "Access Denied"
 
-    return render_template("user_dashboard.html")
+    available_treks = Trek.query.filter_by(
+        status="Open"
+    ).all()
+
+    return render_template(
+        "user_dashboard.html",
+        available_treks=available_treks
+    )
 
 
 # ---------------- LOGOUT ---------------- #
