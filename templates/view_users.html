@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}
+View Users
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between mb-3">
+
+        <h2>Users</h2>
+
+        <a
+            href="{{ url_for('admin_dashboard') }}"
+            class="btn btn-secondary">
+
+            Back
+
+        </a>
+
+    </div>
+
+    <table class="table table-bordered table-striped">
+
+        <thead class="table-dark">
+
+            <tr>
+
+                <th>ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Approved</th>
+                <th>Blacklisted</th>
+                <th>Action</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for user in users %}
+
+            <tr>
+
+                <td>{{ user.id }}</td>
+
+                <td>{{ user.username }}</td>
+
+                <td>{{ user.email }}</td>
+
+                <td>{{ user.role }}</td>
+
+                <td>{{ user.is_approved }}</td>
+
+                <td>{{ user.is_blacklisted }}</td>
+
+                <td>
+
+                    {% if user.is_blacklisted %}
+
+                        <a
+                            href="{{ url_for('unblacklist_user', user_id=user.id) }}"
+                            class="btn btn-success btn-sm">
+
+                            Remove Blacklist
+
+                        </a>
+
+                    {% else %}
+
+                        <a
+                            href="{{ url_for('blacklist_user', user_id=user.id) }}"
+                            class="btn btn-danger btn-sm">
+
+                            Blacklist
+
+                        </a>
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

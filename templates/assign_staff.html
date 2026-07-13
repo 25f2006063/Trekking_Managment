@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}
+Assign Staff
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2>Assign Staff</h2>
+
+    <h4>{{ trek.trek_name }}</h4>
+
+    <p>
+        Currently assigned:
+        {% if trek.staff %}
+            <strong>{{ trek.staff.username }}</strong>
+        {% else %}
+            <span class="text-muted">No staff assigned yet</span>
+        {% endif %}
+    </p>
+
+    {% if error %}
+    <div class="alert alert-danger">
+        {{ error }}
+    </div>
+    {% endif %}
+
+    {% if staff_members %}
+
+    <form method="POST">
+
+        <div class="mb-3">
+
+            <label>Select Staff</label>
+
+            <select
+                name="staff_id"
+                class="form-control">
+
+                {% for staff in staff_members %}
+
+                <option value="{{ staff.id }}"
+                    {% if trek.assigned_staff_id == staff.id %}selected{% endif %}>
+
+                    {{ staff.username }}
+
+                </option>
+
+                {% endfor %}
+
+            </select>
+
+        </div>
+
+        <button
+            type="submit"
+            class="btn btn-success">
+
+            Assign
+
+        </button>
+
+    </form>
+
+    {% else %}
+
+    <div class="alert alert-warning">
+        No approved staff members available. Approve a staff account from
+        <a href="{{ url_for('pending_staff') }}">Pending Staff</a> first.
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

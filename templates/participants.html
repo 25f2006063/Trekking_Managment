@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}
+Participants
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2>{{ trek.trek_name }}</h2>
+
+    <table class="table table-bordered">
+
+        <thead>
+
+            <tr>
+
+                <th>User</th>
+
+                <th>Email</th>
+
+                <th>Status</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for booking in bookings %}
+
+            <tr>
+
+                <td>{{ booking.user.username }}</td>
+
+                <td>{{ booking.user.email }}</td>
+
+                <td>{{ booking.status }}</td>
+
+            </tr>
+
+            {% else %}
+
+            <tr>
+
+                <td colspan="3">
+
+                    No Participants
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

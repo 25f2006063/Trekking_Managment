@@ -8,52 +8,76 @@ User Dashboard
 
 <div class="container mt-4">
 
-    <h2>Available Treks</h2>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <h2>Available Treks</h2>
+
+        <a
+            href="{{ url_for('booking_history') }}"
+            class="btn btn-primary">
+
+            My Bookings
+
+        </a>
+
+    </div>
 
     <table class="table table-bordered">
 
-            <thead>
+        <thead>
 
-                <tr>
+            <tr>
 
-                    <th>Name</th>
-                    <th>Location</th>
-                    <th>Difficulty</th>
-                    <th>Duration</th>
-                    <th>Slots</th>
-                    <th>Status</th>
-                    <th>Action</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Difficulty</th>
+                <th>Duration</th>
+                <th>Slots</th>
+                <th>Status</th>
+                <th>Action</th>
 
-                </tr>
+            </tr>
 
-            </thead>
+        </thead>
 
         <tbody>
 
             {% for trek in available_treks %}
 
-                <tr>
+            <tr>
 
-                    <td>{{ trek.trek_name }}</td>
-                    <td>{{ trek.location }}</td>
-                    <td>{{ trek.difficulty }}</td>
-                    <td>{{ trek.duration }}</td>
-                    <td>{{ trek.available_slots }}</td>
-                    <td>{{ trek.status }}</td>
+                <td>{{ trek.trek_name }}</td>
+                <td>{{ trek.location }}</td>
+                <td>{{ trek.difficulty }}</td>
+                <td>{{ trek.duration }}</td>
+                <td>{{ trek.available_slots }}</td>
+                <td>{{ trek.status }}</td>
 
-                    <td>
+                <td>
 
-                    <a
-                    href="{{ url_for('book_trek', trek_id=trek.id) }}"
-                    class="btn btn-success">
+                    {% if trek.id in booked_treks %}
 
-                    Book
+                        <span class="badge bg-success">
 
-                    </a>
+                            Booked
 
-                    </td>
+                        </span>
 
-                </tr>
+                    {% else %}
+
+                        <a
+                            href="{{ url_for('book_trek', trek_id=trek.id) }}"
+                            class="btn btn-success">
+
+                            Book
+
+                        </a>
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
 
             {% endfor %}
 

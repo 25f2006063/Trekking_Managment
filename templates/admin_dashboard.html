@@ -108,15 +108,12 @@ Admin Dashboard
             Add Trek
         </a>
 
-        <a href="#" class="btn btn-success">
-            Approve Staff
-        </a>
-
-        <a href="#" class="btn btn-warning">
+        <a href="{{ url_for('view_users') }}"
+            class="btn btn-primary">
             View Users
         </a>
 
-        <a href="#" class="btn btn-info">
+        <a href="{{ url_for('view_bookings') }}" class="btn btn-info">
             View Bookings
         </a>
 

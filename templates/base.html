@@ -9,70 +9,245 @@
           content="width=device-width, initial-scale=1">
 
     <title>
+
         {% block title %}
+
         Trek Management
+
         {% endblock %}
+
     </title>
 
-    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+        rel="stylesheet">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
-          rel="stylesheet">
-
-    <!-- Custom CSS -->
-
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/style.css') }}">
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}">
 
 </head>
 
 <body>
 
-    <!-- Navbar -->
-
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
     <div class="container">
 
-        <a class="navbar-brand"
-           href="{{ url_for('home') }}">
+        <a
+            class="navbar-brand"
+            href="{{ url_for('home') }}">
+
             Trek Management
+
         </a>
 
-        <button class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarNav">
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav">
 
             <span class="navbar-toggler-icon"></span>
 
         </button>
 
-        <div class="collapse navbar-collapse"
-             id="navbarNav">
+        <div
+            class="collapse navbar-collapse"
+            id="navbarNav">
 
             <ul class="navbar-nav ms-auto">
 
                 <li class="nav-item">
-                    <a class="nav-link"
-                       href="{{ url_for('home') }}">
-                        Home
-                    </a>
+                    {% if session.get("user_id") %}
+
+                        {% if session["role"] == "admin" %}
+
+                            <a class="navbar-brand"
+                            href="{{ url_for('admin_dashboard') }}">
+
+                                Trek Management
+
+                            </a>
+
+                        {% elif session["role"] == "staff" %}
+
+                            <a class="navbar-brand"
+                            href="{{ url_for('staff_dashboard') }}">
+
+                                Trek Management
+
+                            </a>
+
+                        {% else %}
+
+                            <a class="navbar-brand"
+                            href="{{ url_for('user_dashboard') }}">
+
+                                Trek Management
+
+                            </a>
+
+                        {% endif %}
+
+                    {% else %}
+
+                        <a class="navbar-brand"
+                        href="{{ url_for('home') }}">
+
+                            Trek Management
+
+                        </a>
+
+                    {% endif %}
+
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link"
-                       href="{{ url_for('login') }}">
-                        Login
-                    </a>
-                </li>
+                {% if session.get("user_id") %}
 
-                <li class="nav-item">
-                    <a class="nav-link"
-                       href="{{ url_for('register') }}">
-                        Register
-                    </a>
-                </li>
+                    {% if session["role"] == "admin" %}
+
+                        <li class="nav-item">
+
+                            <a
+                                class="nav-link"
+                                href="{{ url_for('admin_dashboard') }}">
+
+                                Dashboard
+
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item">
+
+                            <a
+                                class="nav-link"
+                                href="{{ url_for('view_treks') }}">
+
+                                Treks
+
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item">
+
+                            <a
+                                class="nav-link"
+                                href="{{ url_for('view_users') }}">
+
+                                Users
+
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item">
+
+                            <a
+                                class="nav-link"
+                                href="{{ url_for('view_bookings') }}">
+
+                                Bookings
+
+                            </a>
+
+                        </li>
+
+                    {% elif session["role"] == "staff" %}
+
+                        <li class="nav-item">
+
+                            <a
+                                class="nav-link"
+                                href="{{ url_for('staff_dashboard') }}">
+
+                                Dashboard
+
+                            </a>
+
+                        </li>
+
+                    {% elif session["role"] == "user" %}
+
+                        <li class="nav-item">
+
+                            <a
+                                class="nav-link"
+                                href="{{ url_for('user_dashboard') }}">
+
+                                Dashboard
+
+                            </a>
+
+                        </li>
+
+                        <li class="nav-item">
+
+                            <a
+                                class="nav-link"
+                                href="{{ url_for('booking_history') }}">
+
+                                My Bookings
+
+                            </a>
+
+                        </li>
+
+                    {% endif %}
+
+                    <li class="nav-item">
+
+                        <a
+                            class="nav-link"
+                            href="{{ url_for('profile') }}">
+
+                            My Profile
+
+                        </a>
+
+                    </li>
+
+                    <li class="nav-item">
+
+                        <a
+                            class="nav-link text-danger"
+                            href="{{ url_for('logout') }}">
+
+                            Logout
+
+                        </a>
+
+                    </li>
+
+                {% else %}
+
+                    <li class="nav-item">
+
+                        <a
+                            class="nav-link"
+                            href="{{ url_for('login') }}">
+
+                            Login
+
+                        </a>
+
+                    </li>
+
+                    <li class="nav-item">
+
+                        <a
+                            class="nav-link"
+                            href="{{ url_for('register') }}">
+
+                            Register
+
+                        </a>
+
+                    </li>
+
+                {% endif %}
 
             </ul>
 
@@ -82,15 +257,15 @@
 
 </nav>
 
-    <!-- Main Content -->
+<div class="container mt-4">
 
-    <div class="container mt-4">
+    {% block content %}
 
-        {% block content %}
+    {% endblock %}
 
-        {% endblock %}
+</div>
 
-    </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 

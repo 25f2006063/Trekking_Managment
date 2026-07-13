@@ -17,6 +17,56 @@ View Treks
         </a>
 
     </div>
+    <form method="GET" class="row mb-3">
+
+        <div class="col-md-4">
+
+            <input
+                type="text"
+                name="search"
+                class="form-control"
+                placeholder="Search Trek">
+
+        </div>
+
+        <div class="col-md-3">
+
+            <select
+                name="difficulty"
+                class="form-control">
+
+                <option value="">All Difficulty</option>
+                <option value="Easy">Easy</option>
+                <option value="Moderate">Moderate</option>
+                <option value="Hard">Hard</option>
+
+            </select>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <input
+                type="text"
+                name="location"
+                class="form-control"
+                placeholder="Location">
+
+        </div>
+
+        <div class="col-md-2">
+
+            <button
+                class="btn btn-primary w-100"
+                type="submit">
+
+                Filter
+
+            </button>
+
+        </div>
+
+    </form>
 
     <table class="table table-bordered table-striped">
 
@@ -30,6 +80,7 @@ View Treks
                 <th>Duration</th>
                 <th>Slots</th>
                 <th>Status</th>
+                <th>Assigned Staff</th>
                 <th>Actions</th>
             </tr>
 
@@ -56,6 +107,14 @@ View Treks
                 <td>{{ trek.status }}</td>
 
                 <td>
+                    {% if trek.staff %}
+                        {{ trek.staff.username }}
+                    {% else %}
+                        <span class="text-muted">Unassigned</span>
+                    {% endif %}
+                </td>
+
+                <td>
 
                     <a href="{{ url_for('edit_trek', trek_id=trek.id) }}" 
                         class="btn btn-warning btn-sm">
@@ -68,6 +127,10 @@ View Treks
 
                         Delete
 
+                    </a>
+                    <a href="{{ url_for('assign_staff', trek_id=trek.id) }}"
+                        class="btn btn-info btn-sm">
+                        Assign Staff
                     </a>
                 </td>
 

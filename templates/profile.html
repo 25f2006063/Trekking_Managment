@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Profile
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2>My Profile</h2>
+
+    <form method="POST">
+
+        <div class="mb-3">
+
+            <label>Username</label>
+
+            <input
+                type="text"
+                name="username"
+                class="form-control"
+                value="{{ user.username }}"
+                required>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label>Email</label>
+
+            <input
+                type="email"
+                name="email"
+                class="form-control"
+                value="{{ user.email }}"
+                required>
+
+        </div>
+
+        <div class="mb-3">
+
+            <label>Password</label>
+
+            <input
+                type="text"
+                name="password"
+                class="form-control"
+                value="{{ user.password }}"
+                required>
+
+        </div>
+
+        <button
+            type="submit"
+            class="btn btn-success">
+
+            Update Profile
+
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}
