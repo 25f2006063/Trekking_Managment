@@ -39,16 +39,16 @@ with app.app_context():
 @app.route("/")
 def home():
 
-    if "user_id" in session:
+    # if "user_id" in session:
 
-        if session["role"] == "admin":
-            return redirect("/admin")
+    #     if session["role"] == "admin":
+    #         return redirect("/admin")
 
-        elif session["role"] == "staff":
-            return redirect("/staff")
+    #     elif session["role"] == "staff":
+    #         return redirect("/staff")
 
-        else:
-            return redirect("/user")
+    #     else:
+    #         return redirect("/user")
 
     return render_template("index.html")
 
@@ -564,18 +564,20 @@ def user_dashboard():
     ).all()
 
     my_bookings = Booking.query.filter_by(
-        user_id=session["user_id"]
+        user_id=session["user_id"],
+        status="Booked"
     ).all()
 
     booked_treks = []
 
     for booking in my_bookings:
+
         booked_treks.append(booking.trek_id)
 
     return render_template(
-    "user_dashboard.html",
-    available_treks=available_treks,
-    booked_treks=booked_treks
+        "user_dashboard.html",
+        available_treks=available_treks,
+        booked_treks=booked_treks
     )
 
 # ---------------- USER BOOKING ---------------- #
@@ -640,7 +642,7 @@ def book_trek(trek_id):
 
     return redirect("/user")
 
-# ---------------- USER BOOKINGS ---------------- #
+# ---------------- USER BOOKINGS HISTORY ---------------- #
 @app.route("/user/bookings")
 def booking_history():
 

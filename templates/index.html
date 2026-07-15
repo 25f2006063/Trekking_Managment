@@ -1,20 +1,213 @@
 {% extends "base.html" %}
 
 {% block title %}
-
-Home
-
+Trek Management
 {% endblock %}
 
 {% block content %}
 
-<div class="text-center">
+<div class="hero-section">
+    
+    <div class="hero-overlay">
 
-    <h1>Welcome to Trek Management Application</h1>
+        <div class="container text-center">
 
-    <p>
-        Manage Treks, Staff and Bookings Easily
-    </p>
+            <h1 class="display-3 fw-bold text-white">
+
+                Trek Management System
+
+            </h1>
+
+            <p class="lead text-white mt-3">
+
+                Discover breathtaking trekking destinations, book your next adventure,
+                and experience nature with confidence.
+
+            </p>
+
+            <div class="mt-4">
+
+                <a
+                    href="{{ url_for('login') }}"
+                    class="btn btn-success btn-lg me-3">
+
+                    Login
+
+                </a>
+
+                <a
+                    href="{{ url_for('register') }}"
+                    class="btn btn-outline-light btn-lg">
+
+                    Register
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="container mt-5">
+
+    <div class="row text-center">
+
+        <div class="col-md-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h3>🏔</h3>
+
+                    <h5>Explore Treks</h5>
+
+                    <p>
+
+                        Browse exciting trekking destinations suitable for every experience level.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h3>📅</h3>
+
+                    <h5>Easy Booking</h5>
+
+                    <p>
+
+                        Reserve your preferred trek quickly with real-time slot availability.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h3>👨‍💼</h3>
+
+                    <h5>Verified Staff</h5>
+
+                    <p>
+
+                        Every trek is managed by approved trek staff for a safer experience.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="container mt-5 mb-5">
+
+    <h2 class="text-center mb-4">
+
+        Trek Difficulty Levels
+
+    </h2>
+
+    <div class="row text-center">
+
+        <div class="col-md-4">
+
+            <div class="card border-success">
+
+                <div class="card-body">
+
+                    <h4 class="text-success">
+
+                        Easy
+
+                    </h4>
+
+                    <p>
+
+                        Suitable for beginners and families.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card border-warning">
+
+                <div class="card-body">
+
+                    <h4 class="text-warning">
+
+                        Moderate
+
+                    </h4>
+
+                    <p>
+
+                        Suitable for regular trekkers with moderate fitness.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card border-danger">
+
+                <div class="card-body">
+
+                    <h4 class="text-danger">
+
+                        Hard
+
+                    </h4>
+
+                    <p>
+
+                        Suitable for experienced trekkers looking for challenging adventures.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
